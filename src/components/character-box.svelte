@@ -8,7 +8,6 @@
 	export let causeofDeath: string | undefined = undefined;
 	export let burial: string | undefined = undefined;
 	export let parentsNames: string[] | undefined = [];
-	export let parents: Character[] | undefined = [];
 </script>
 
 {#if name}

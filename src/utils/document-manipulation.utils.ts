@@ -1,7 +1,11 @@
-import { CHARACTER_KEYS } from '../constant';
+import { CHARACTER_KEYS, NOT_ALLOWED_WORDS } from '../constant';
 import type { Character, PageContent } from '../types';
 
-const createElementFromHTML = (htmlString: string, elementId: string = ''): HTMLElement => {
+const createElementFromHTML = (
+	htmlString: string,
+	elementId: string = ''
+): HTMLElement | undefined => {
+	if (!document) return;
 	const div = document.createElement('div');
 	div.innerHTML = htmlString?.trim();
 	div.setAttribute('id', elementId);
@@ -52,7 +56,7 @@ const getParentsNames = (elementId: string): (string | undefined | null)[] | und
 				if (isACiteNote(hrefValue)) return;
 				return removeWikipediaLink(hrefValue);
 			})
-			.filter((value) => value);
+			.filter((value) => value && !NOT_ALLOWED_WORDS.includes(value));
 
 		if (listParentElements) {
 			parentsNames.push(...listParentElements);
@@ -80,15 +84,17 @@ const getCharacterData = (elementId: string): Character => {
 	return { image, bornDate, diedDate, causeofDeath, burial, parentsNames } as Character;
 };
 
-export const formatBody = ({ revisions, title }: PageContent): Character => {
-	const pageHtmlContent = revisions?.[0]?.['*'] || '';
+export const formatBody = ({ text, title, pageid }: PageContent): Character | undefined => {
+	const pageHtmlContent = text || '';
 	const elementId = title?.replace(/\s/g, '').toLocaleLowerCase() || 'createdElement';
+
+	if (!pageHtmlContent || !elementId || typeof window === 'undefined') return;
 	createElementFromHTML(pageHtmlContent, elementId);
-	return { ...getCharacterData(elementId), name: title };
+	return { ...getCharacterData(elementId), name: title, pageid };
 };
 
-export const getRedirection = ({ revisions, title }: PageContent) => {
-	const pageHtmlContent = revisions?.[0]?.['*'];
+export const getRedirection = ({ text, title }: PageContent) => {
+	const pageHtmlContent = text;
 	if (
 		!pageHtmlContent ||
 		!pageHtmlContent?.includes(
@@ -99,7 +105,7 @@ export const getRedirection = ({ revisions, title }: PageContent) => {
 
 	const createdRedirectionElement = createElementFromHTML(pageHtmlContent, title);
 	const redirectionLink = createdRedirectionElement
-		.querySelector('.redirectText li a')
+		?.querySelector('.redirectText li a')
 		?.getAttribute('href');
 	return removeWikipediaLink(redirectionLink);
 };

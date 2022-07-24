@@ -7,3 +7,5 @@ export const CHARACTER_KEYS = {
 	FATHER: 'father',
 	MOTHER: 'mother'
 };
+
+export const NOT_ALLOWED_WORDS = ['Hesiod'];

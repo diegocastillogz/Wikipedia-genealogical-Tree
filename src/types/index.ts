@@ -1,10 +1,11 @@
 export type PageContent = {
 	title?: string;
-	pageid?: string;
-	revisions?: Array<Revisions>;
+	pageid?: number;
+	text?: string;
 };
 
 export type Character = {
+	pageid?: number;
 	name?: string;
 	image?: string;
 	bornDate?: string;
@@ -12,9 +13,5 @@ export type Character = {
 	burial?: string;
 	causeofDeath?: string;
 	parentsNames?: string[];
-	parents?: Character[];
-};
-
-export type Revisions = {
-	'*': string;
+	parents: Character[];
 };
