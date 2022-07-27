@@ -32,9 +32,11 @@ const getRowElementByKey = (elementId: string, key: string): HTMLElement | null 
 		return;
 	}
 	const thTagsElements = Array.from(thElementsInDivWithId);
-	return thTagsElements?.find(({ innerText }) =>
-		innerText?.toLowerCase().replace(/\s/g, '').includes(key)
-	)?.nextElementSibling as HTMLElement;
+	return thTagsElements?.find(({ innerText }) => {
+		const text = innerText?.toLowerCase().replace(/\s/g, '');
+		const startWithExpresion = new RegExp('^' + key);
+		return startWithExpresion.test(text);
+	})?.nextElementSibling as HTMLElement;
 };
 
 export const formatUrlSearch = (urlSearch: string | undefined): string =>

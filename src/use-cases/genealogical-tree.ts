@@ -2,13 +2,12 @@ import type { Character } from '../types';
 import { getCharacterParentsInfo, getCharacterInfo } from '../routes/api/api.utils';
 
 export class Node {
-	character?: Character | undefined;
-	left?: Node | null;
-	right?: Node | null;
+	character?: Character;
+	parents: Node[] | [];
+
 	constructor(node?: Node) {
 		this.character = node?.character || ({} as Character);
-		this.left = null;
-		this.right = null;
+		this.parents = [];
 	}
 }
 
@@ -23,10 +22,12 @@ export class GenealogicalTree {
 
 	init = async () => {
 		const character = await getCharacterInfo(this.characterName || '');
-		this.root = await this.insert(new Node({ character }));
+		const rootNode = new Node({ character } as Node);
+		this.root = await this.insert(rootNode);
 	};
 
 	insert = async (currentNode: Node): Promise<Node | undefined> => {
+		if (!currentNode) return;
 		if (
 			currentNode?.character?.pageid &&
 			this.requestedPageId.includes(currentNode?.character?.pageid)
@@ -34,8 +35,12 @@ export class GenealogicalTree {
 			return currentNode;
 		}
 		const parents = await getCharacterParentsInfo(currentNode?.character?.parentsNames || []);
-		currentNode.left = { character: parents?.[0] };
-		currentNode.right = { character: parents?.[1] };
+		if (parents && currentNode?.parents) {
+			const newParents = parents.map(
+				(character: Character) => ({ character, parents: [] } as Node)
+			);
+			currentNode.parents = newParents;
+		}
 		if (currentNode?.character?.pageid) this.requestedPageId.push(currentNode?.character?.pageid);
 		return currentNode;
 	};
@@ -43,29 +48,33 @@ export class GenealogicalTree {
 	insertWithpreOrderIteration = async (
 		currentNode: Node | undefined
 	): Promise<Node | undefined> => {
-		if (!currentNode || this.requestedPageId.length === 10) {
+		if (!currentNode || this.requestedPageId.length === 50) {
 			return;
 		}
 
-		if (!currentNode?.left && !currentNode?.right && currentNode.character?.name) {
+		if (
+			!currentNode?.parents?.[0]?.character &&
+			!currentNode?.parents?.[1]?.character &&
+			currentNode.character?.name
+		) {
 			currentNode = await this.insert(currentNode);
 		}
-		if (currentNode?.left) {
-			await this.insertWithpreOrderIteration(currentNode?.left);
+		if (currentNode?.parents?.[0]) {
+			await this.insertWithpreOrderIteration(currentNode?.parents?.[0]);
 		}
-		if (currentNode?.right) {
-			await this.insertWithpreOrderIteration(currentNode?.right);
+		if (currentNode?.parents?.[1]) {
+			await this.insertWithpreOrderIteration(currentNode?.parents?.[1]);
 		}
 	};
 
-	getAllNodes = (): Character[] => {
+	static getTreeByPreOrder = (root: Node): Character[] => {
 		function getPreorderIteration(currentNode: Node | undefined) {
 			if (currentNode?.character) nodesStack.push(currentNode.character);
-			if (currentNode?.left) getPreorderIteration(currentNode.left);
-			if (currentNode?.right) getPreorderIteration(currentNode.right);
+			if (currentNode?.parents?.[0]) getPreorderIteration(currentNode?.parents?.[0]);
+			if (currentNode?.parents?.[1]) getPreorderIteration(currentNode?.parents?.[1]);
 		}
 		const nodesStack: Character[] = [] as Character[];
-		getPreorderIteration(this.root);
+		getPreorderIteration(root);
 		return nodesStack;
 	};
 }
