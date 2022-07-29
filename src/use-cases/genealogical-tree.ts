@@ -14,11 +14,14 @@ export class Node {
 export class GenealogicalTree {
 	root?: Node;
 	characterName?: string;
-	requestedPageId: number[] = [];
+	requestedPagesId: number[] = [];
+	MAX_PARIENTS = 50;
 
 	constructor(characterName: string) {
 		this.characterName = characterName;
 	}
+
+	getRequestedPagesId = () => this.requestedPagesId;
 
 	init = async () => {
 		const character = await getCharacterInfo(this.characterName || '');
@@ -26,11 +29,14 @@ export class GenealogicalTree {
 		this.root = await this.insert(rootNode);
 	};
 
+	isMaxParientsReached = () => this.requestedPagesId.length === this.MAX_PARIENTS;
+	isHalfParientsReached = () => this.requestedPagesId.length === this.MAX_PARIENTS / 2;
+
 	insert = async (currentNode: Node): Promise<Node | undefined> => {
 		if (!currentNode) return;
 		if (
 			currentNode?.character?.pageid &&
-			this.requestedPageId.includes(currentNode?.character?.pageid)
+			this.requestedPagesId.includes(currentNode?.character?.pageid)
 		) {
 			return currentNode;
 		}
@@ -41,14 +47,16 @@ export class GenealogicalTree {
 			);
 			currentNode.parents = newParents;
 		}
-		if (currentNode?.character?.pageid) this.requestedPageId.push(currentNode?.character?.pageid);
+		if (currentNode?.character?.pageid) {
+			this.requestedPagesId.push(currentNode?.character?.pageid);
+		}
 		return currentNode;
 	};
 
 	insertWithpreOrderIteration = async (
 		currentNode: Node | undefined
 	): Promise<Node | undefined> => {
-		if (!currentNode || this.requestedPageId.length === 50) {
+		if (!currentNode || this.isMaxParientsReached()) {
 			return;
 		}
 

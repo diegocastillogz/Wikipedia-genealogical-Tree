@@ -11,7 +11,7 @@
 	{#await treeContent}
 		<p>...loading</p>
 	{:then rootCharacter}
-		{#if rootCharacter}
+		{#if rootCharacter?.character?.name}
 			<div class="tf-tree tf-ancestor-tree tf-gap-lg">
 				<ul>
 					<TreeComponent characterNode={rootCharacter} />

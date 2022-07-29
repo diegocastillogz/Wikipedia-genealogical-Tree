@@ -1,3 +1,4 @@
+import { deleteUselessElementsInDocument } from '../utils/document-manipulation.utils';
 import { GenealogicalTree } from '../use-cases/genealogical-tree';
 
 export const getGenealogicalTreeRoot = async (url: URL) => {
@@ -7,5 +8,10 @@ export const getGenealogicalTreeRoot = async (url: URL) => {
 	const tree = new GenealogicalTree(queryParam);
 	await tree.init();
 	await tree.insertWithpreOrderIteration(tree.root);
-	return await tree.root;
+
+	deleteUselessElementsInDocument(
+		tree.requestedPagesId.map((requestePageId) => requestePageId.toString())
+	);
+
+	return tree.root;
 };

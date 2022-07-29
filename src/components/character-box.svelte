@@ -1,38 +1,33 @@
 <script lang="ts">
 	import type { Character } from 'src/types';
 
-	export let image: string | undefined = undefined;
-	export let name: string | undefined = undefined;
-	export let bornDate: string | undefined = undefined;
-	export let diedDate: string | undefined = undefined;
-	export let causeofDeath: string | undefined = undefined;
-	export let burial: string | undefined = undefined;
+	export let character: Character;
 </script>
 
-<section class="tf-nc">
+<section class="tf-nc" id={character.pageid?.toString()}>
 	<div class="node-text">
-		{#if name}
-			<h2>{name}</h2>
+		{#if character.name}
+			<h2>{character.name}</h2>
 		{/if}
 
-		{#if image}
-			<img src={image} alt={`${name} character`} />
+		{#if character.image}
+			<img src={character.image} alt={`${character.name} character`} />
 		{/if}
 
-		{#if causeofDeath}
-			<p>{causeofDeath}</p>
+		{#if character.causeofDeath}
+			<p>{character.causeofDeath}</p>
 		{/if}
 
-		{#if bornDate}
-			<p>{bornDate}</p>
+		{#if character.bornDate}
+			<p>{character.bornDate}</p>
 		{/if}
 
-		{#if diedDate}
-			<p>{diedDate}</p>
+		{#if character.diedDate}
+			<p>{character.diedDate}</p>
 		{/if}
 
-		{#if burial}
-			<p>{burial}</p>
+		{#if character.burial}
+			<p>{character.burial}</p>
 		{/if}
 	</div>
 </section>

@@ -50,14 +50,9 @@ const getParentsNames = (elementId: string): (string | undefined | null)[] | und
 	const listElementsParentsTags = getRowElementByKey(elementId, CHARACTER_KEYS.PARENTS);
 	const listElementFatherTag = getRowElementByKey(elementId, CHARACTER_KEYS.FATHER);
 	const listElementMotherTag = getRowElementByKey(elementId, CHARACTER_KEYS.MOTHER);
-
 	if (listElementsParentsTags) {
 		const listParentElements = Array.from(listElementsParentsTags.getElementsByTagName('a'))
-			.map((value) => {
-				const hrefValue = value?.getAttribute('href');
-				if (isACiteNote(hrefValue)) return;
-				return removeWikipediaLink(hrefValue);
-			})
+			.map(getLinkElementOrText)
 			.filter((value) => value && !NOT_ALLOWED_WORDS.includes(value));
 
 		if (listParentElements) {
@@ -66,14 +61,25 @@ const getParentsNames = (elementId: string): (string | undefined | null)[] | und
 	}
 
 	if (listElementFatherTag) {
-		parentsNames.push(listElementFatherTag.innerText);
+		parentsNames.push(getLinkElementOrText(listElementFatherTag));
 	}
 
 	if (listElementMotherTag) {
-		parentsNames.push(listElementMotherTag.innerText);
+		parentsNames.push(getLinkElementOrText(listElementMotherTag));
 	}
-
 	return parentsNames;
+};
+
+const getLinkElementOrText = (listElementTag: HTMLElement) => {
+	const linkElement = listElementTag.getElementsByTagName('a')[0];
+	if (!linkElement) return listElementTag.innerText;
+	return getHrefValue(linkElement);
+};
+
+const getHrefValue = (element: HTMLElement) => {
+	const hrefValue = element?.getAttribute('href');
+	if (isACiteNote(hrefValue)) return;
+	return removeWikipediaLink(hrefValue);
 };
 
 const getCharacterData = (elementId: string): Character => {
@@ -88,14 +94,13 @@ const getCharacterData = (elementId: string): Character => {
 
 export const formatBody = ({ text, title, pageid }: PageContent): Character | undefined => {
 	const pageHtmlContent = text || '';
-	const elementId = title?.replace(/\s/g, '').toLocaleLowerCase() || 'createdElement';
 
-	if (!pageHtmlContent || !elementId || typeof window === 'undefined') return;
-	createElementFromHTML(pageHtmlContent, elementId);
-	return { ...getCharacterData(elementId), name: title, pageid };
+	if (!pageHtmlContent || typeof window === 'undefined') return;
+	createElementFromHTML(pageHtmlContent, pageid?.toString());
+	return { ...getCharacterData(pageid?.toString()), name: title, pageid };
 };
 
-export const getRedirection = ({ text, title }: PageContent) => {
+export const getRedirection = ({ text, pageid }: PageContent) => {
 	const pageHtmlContent = text;
 	if (
 		!pageHtmlContent ||
@@ -105,11 +110,31 @@ export const getRedirection = ({ text, title }: PageContent) => {
 	)
 		return;
 
-	const createdRedirectionElement = createElementFromHTML(pageHtmlContent, title);
+	const createdRedirectionElement = createElementFromHTML(
+		pageHtmlContent,
+		`${pageid.toString()}-redirect-remove`
+	);
 	const redirectionLink = createdRedirectionElement
 		?.querySelector('.redirectText li a')
 		?.getAttribute('href');
 	return removeWikipediaLink(redirectionLink);
+};
+
+export const deleteElementInDocument = (elementId: string) =>
+	document.getElementById(elementId)?.remove();
+
+export const getAllRedirectElements = () => document.querySelectorAll('[id$="redirect-remove"]');
+
+export const deleteUselessElementsInDocument = (elementsToDeleteList: string[]) => {
+	elementsToDeleteList.forEach((elementToDelete) => deleteElementInDocument(elementToDelete));
+	Array.from(getAllRedirectElements()).forEach((redirectElementToDelete) =>
+		redirectElementToDelete?.remove()
+	);
+};
+
+export const scrollToElement = (elementId: string) => {
+	const elementToScroll = document.getElementById(elementId);
+	elementToScroll?.scrollIntoView();
 };
 
 const removeWikipediaLink = (url: string | null | undefined) => url?.split('/wiki/')[1];

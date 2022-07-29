@@ -1,7 +1,7 @@
 export type PageContent = {
-	title?: string;
-	pageid?: number;
-	text?: string;
+	title: string;
+	pageid: number;
+	text: string;
 };
 
 export type Character = {
