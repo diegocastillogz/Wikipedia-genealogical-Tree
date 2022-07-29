@@ -7,7 +7,7 @@ export const getGenealogicalTreeRoot = async (url: URL) => {
 
 	const tree = new GenealogicalTree(queryParam);
 	await tree.init();
-	await tree.insertWithpreOrderIteration(tree.root);
+	await tree.insertWithBFSIteration(tree.root);
 
 	deleteUselessElementsInDocument(
 		tree.requestedPagesId.map((requestePageId) => requestePageId.toString())

@@ -15,7 +15,11 @@ export class GenealogicalTree {
 	root?: Node;
 	characterName?: string;
 	requestedPagesId: number[] = [];
-	MAX_PARIENTS = 50;
+
+	/*
+	Each generation is a power of 2 so we're loading the first 6 generations to not break the app because there are too many requests
+	*/
+	MAX_FIRST_LOAD_PARIENTS = Math.pow(2, 6);
 
 	constructor(characterName: string) {
 		this.characterName = characterName;
@@ -29,8 +33,7 @@ export class GenealogicalTree {
 		this.root = await this.insert(rootNode);
 	};
 
-	isMaxParientsReached = () => this.requestedPagesId.length === this.MAX_PARIENTS;
-	isHalfParientsReached = () => this.requestedPagesId.length === this.MAX_PARIENTS / 2;
+	isMaxParientsReached = () => this.requestedPagesId.length === this.MAX_FIRST_LOAD_PARIENTS;
 
 	insert = async (currentNode: Node): Promise<Node | undefined> => {
 		if (!currentNode) return;
@@ -53,36 +56,20 @@ export class GenealogicalTree {
 		return currentNode;
 	};
 
-	insertWithpreOrderIteration = async (
-		currentNode: Node | undefined
-	): Promise<Node | undefined> => {
-		if (!currentNode || this.isMaxParientsReached()) {
-			return;
-		}
+	insertWithBFSIteration = async (root?: Node) => {
+		const queue: Node[] = [] as Node[];
+		let current: Node | undefined = root;
 
-		if (
-			!currentNode?.parents?.[0]?.character &&
-			!currentNode?.parents?.[1]?.character &&
-			currentNode.character?.name
-		) {
-			currentNode = await this.insert(currentNode);
-		}
-		if (currentNode?.parents?.[0]) {
-			await this.insertWithpreOrderIteration(currentNode?.parents?.[0]);
-		}
-		if (currentNode?.parents?.[1]) {
-			await this.insertWithpreOrderIteration(currentNode?.parents?.[1]);
-		}
-	};
+		if (!current) return;
 
-	static getTreeByPreOrder = (root: Node): Character[] => {
-		function getPreorderIteration(currentNode: Node | undefined) {
-			if (currentNode?.character) nodesStack.push(currentNode.character);
-			if (currentNode?.parents?.[0]) getPreorderIteration(currentNode?.parents?.[0]);
-			if (currentNode?.parents?.[1]) getPreorderIteration(currentNode?.parents?.[1]);
+		queue.push(current);
+		while (queue.length > 0) {
+			current = queue.shift();
+			if (!current || this.isMaxParientsReached()) break;
+			current = await this.insert(current);
+
+			if (current?.parents[0]) queue.push(current?.parents[0]);
+			if (current?.parents[1]) queue.push(current?.parents[1]);
 		}
-		const nodesStack: Character[] = [] as Character[];
-		getPreorderIteration(root);
-		return nodesStack;
 	};
 }
