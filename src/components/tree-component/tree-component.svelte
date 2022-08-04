@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import CharacterBox from '../character-box.svelte';
+	import CharacterBox from '../character-box/character-box.svelte';
 	import type { Node } from '../../use-cases/genealogical-tree';
 	import { scrollToElement } from '../../utils/document-manipulation.utils';
 	export let characterNode: Node;

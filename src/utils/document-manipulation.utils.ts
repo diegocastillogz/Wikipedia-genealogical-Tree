@@ -1,5 +1,6 @@
 import { CHARACTER_KEYS, NOT_ALLOWED_WORDS } from '../constant';
 import type { Character, PageContent } from '../types';
+import { removeWikipediaLink } from './miscellaneous.utils';
 
 const createElementFromHTML = (
 	htmlString: string,
@@ -39,9 +40,6 @@ const getRowElementByKey = (elementId: string, key: string): HTMLElement | null 
 	})?.nextElementSibling as HTMLElement;
 };
 
-export const formatUrlSearch = (urlSearch: string | undefined): string =>
-	urlSearch?.replace(/\s/g, '_') || '';
-
 const getElementText = (elementId: string, key: string): string | undefined =>
 	getRowElementByKey(elementId, key)?.innerText || '';
 
@@ -78,7 +76,7 @@ const getLinkElementOrText = (listElementTag: HTMLElement) => {
 
 const getHrefValue = (element: HTMLElement) => {
 	const hrefValue = element?.getAttribute('href');
-	if (isACiteNote(hrefValue)) return;
+	if (hrefValue?.includes('#cite')) return;
 	return removeWikipediaLink(hrefValue);
 };
 
@@ -134,8 +132,5 @@ export const deleteUselessElementsInDocument = (elementsToDeleteList: string[]) 
 
 export const scrollToElement = (elementId: string) => {
 	const elementToScroll = document.getElementById(elementId);
-	elementToScroll?.scrollIntoView();
+	elementToScroll?.scrollIntoView({ block: 'center', inline: 'center' });
 };
-
-const removeWikipediaLink = (url: string | null | undefined) => url?.split('/wiki/')[1];
-const isACiteNote = (url: string | null | undefined) => url?.includes('#cite');
