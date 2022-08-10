@@ -15,3 +15,9 @@ export type Character = {
 	parentsNames?: string[];
 	parents: Character[];
 };
+
+export type AutocompleteSearchResult = {
+	title: string;
+	pageId: number;
+	snippet: string;
+};

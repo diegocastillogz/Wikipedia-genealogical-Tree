@@ -13,7 +13,7 @@
 
 {#if characterNode.character}
 	<li>
-		<CharacterBox character={characterNode.character} />
+		<CharacterBox {...characterNode} />
 		{#if characterNode.parents.length > 0}
 			<ul>
 				{#each characterNode.parents as parent}

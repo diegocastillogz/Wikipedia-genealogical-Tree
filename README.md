@@ -2,11 +2,17 @@
 
 ## Following steps
 
-- Autocomplete from Wikipedia input
-
-https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Nelson%20Mandela&utf8=&format=json&srsort=relevance&srlimit=5
-
 - Getting character info when the user clicks it (leaf nodes)
-- Creating the screen where the tree will be draw allowing the user move it click and draging the mouse
 - working in styles
+- todos on character-box component
+- left menu with the characters and search bar to improve UX
 - saving most searched characters on db
+
+## What I'm using on this project
+
+- DOM manipulation with the input from the Wikipedia API
+- Nested promises using the ancestors of a character
+- Svelte stores saving the tree of the character on it
+- Svelte routes
+- Javascript classes
+- Recursive calling drawing the character nodes with svelte:self

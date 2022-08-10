@@ -130,7 +130,7 @@ export const deleteUselessElementsInDocument = (elementsToDeleteList: string[]) 
 	);
 };
 
-export const scrollToElement = (elementId: string) => {
+export const scrollToElement = (elementId: string, behavior: ScrollBehavior = 'auto') => {
 	const elementToScroll = document.getElementById(elementId);
-	elementToScroll?.scrollIntoView({ block: 'center', inline: 'center' });
+	elementToScroll?.scrollIntoView({ block: 'center', inline: 'center', behavior });
 };

@@ -5,9 +5,9 @@
 	import { getGenealogicalTreeRoot } from '../../controllers/get-genealogical-tree.controller';
 
 	import TreeComponent from '../../components/tree-component/tree-component.svelte';
-	import InputSearch from '../../components/input-search/input-search.svelte';
 
 	import type { Node } from '../../use-cases/genealogical-tree';
+
 	const url = $page.url;
 
 	let treeContent = {} as Promise<Node | undefined>;
@@ -26,22 +26,19 @@
 	}
 </script>
 
-<div>
-	<InputSearch />
-	{#await treeContent}
-		<p>...loading</p>
-	{:then rootCharacter}
-		{#if rootCharacter?.character?.name}
-			<div class="tf-tree tf-ancestor-tree tf-gap-lg">
-				<ul>
-					<TreeComponent characterNode={rootCharacter} />
-				</ul>
-			</div>
-		{/if}
-	{:catch error}
-		<p style="color: red">{error.message}</p>
-	{/await}
-</div>
+{#await treeContent}
+	<p>...loading</p>
+{:then rootCharacter}
+	{#if rootCharacter?.character?.name}
+		<div class="tf-tree tf-ancestor-tree tf-gap-lg">
+			<ul>
+				<TreeComponent characterNode={rootCharacter} />
+			</ul>
+		</div>
+	{/if}
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
 
 <style>
 	:global(.tf-ancestor-tree) {
