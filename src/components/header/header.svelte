@@ -8,11 +8,19 @@
 </header>
 
 <style>
+	h1 {
+		margin-bottom: 10px;
+		width: 50vw;
+		color: var(--primaryFont);
+	}
+
 	header {
+		display: flex;
+		justify-content: space-between;
 		position: sticky;
 		top: 0px;
 		padding: 10px 15px 5px;
-		background-color: white;
+		background-color: var(--secondary);
 		z-index: 100;
 	}
 </style>

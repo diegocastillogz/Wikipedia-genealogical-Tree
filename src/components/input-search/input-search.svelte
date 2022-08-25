@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { AutocompleteSearchResult } from '../../types';
+
 	import { getAutocompleteSearch } from '../../routes/api/get-page-content';
+
 	import { formatSpacesToUnderscore } from '../../utils/miscellaneous.utils';
+
+	import type { AutocompleteSearchResult } from '../../types';
 
 	let inputValue = '';
 	let autoCompleteSearchResults: AutocompleteSearchResult[] = [];
@@ -58,12 +61,16 @@
 		width: 40%;
 		font-size: 16px;
 		padding: 6px 12px;
+		width: 50vw;
+		background-color: var(--terciary);
+		color: var(--white);
 	}
 
 	.autocomplete-list {
 		position: absolute;
 		z-index: 100;
-		width: calc(40% + 28px);
+		width: 100%;
+		opacity: 0.9;
 	}
 
 	.autocomplete-list li {
@@ -74,6 +81,8 @@
 		padding: 12px 8px;
 		background-color: white;
 		border: none;
+		width: 100%;
+		text-align: left;
 	}
 
 	.autocomplete-list-item-button:hover {

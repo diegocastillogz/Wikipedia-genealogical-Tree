@@ -1,18 +1,23 @@
 <script lang="ts">
 	import Header from '../components/header/header.svelte';
+	import ThemeProvider from '../components/theme-provider/theme-provider.svelte';
 </script>
 
-<div class="layout">
-	<Header />
-	<main>
-		<slot />
-	</main>
-</div>
+<ThemeProvider>
+	<div class="layout">
+		<Header />
+		<main>
+			<slot />
+		</main>
+	</div>
+</ThemeProvider>
 
 <style>
 	.layout {
 		display: flex;
 		flex-direction: column;
+		background-color: var(--primary);
+		min-height: 100vh;
 	}
 
 	:global(main > div) {

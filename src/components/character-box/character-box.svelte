@@ -73,6 +73,8 @@
 <style>
 	section {
 		max-height: 650px;
+		color: var(--primaryFont);
+		background-color: var(--boxColor);
 		width: 300px;
 	}
 
