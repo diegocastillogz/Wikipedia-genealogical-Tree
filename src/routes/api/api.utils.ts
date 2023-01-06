@@ -1,7 +1,7 @@
 import { GET } from './get-page-content';
 import { formatBody } from '../../utils/document-manipulation.utils';
 import type { Character, PageContent } from '../../types';
-import { formatSpacesToUnderscore } from '../..//utils/miscellaneous.utils';
+import { formatSpacesToUnderscore } from '../../utils/miscellaneous.utils';
 
 export const getCharacterInfo = async (characterName: string): Promise<Character | undefined> => {
 	const parentUrlFormat = formatSpacesToUnderscore(characterName);

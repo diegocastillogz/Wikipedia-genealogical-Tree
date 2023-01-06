@@ -19,8 +19,9 @@
 	}
 
 	$: if ($navigating) {
-		const queryParamTo = $navigating?.to?.searchParams.get('q') ?? '';
-		const queryParamFrom = $navigating?.from?.searchParams.get('q') ?? '';
+		const queryParamTo = $navigating?.to?.url.searchParams.get('q') ?? '';
+		const queryParamFrom = $navigating?.from?.url.searchParams.get('q') ?? '';
+
 		if (queryParamFrom !== queryParamTo) {
 			treeContent = getGenealogicalTreeRoot(queryParamTo);
 		}

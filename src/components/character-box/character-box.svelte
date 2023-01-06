@@ -78,6 +78,7 @@
 						<a
 							class="wikipedia"
 							target="_blank"
+							rel="noreferrer"
 							href={`https://en.wikipedia.org/?curid=${character.pageid}`}
 							><Icon iconName="wikipedia" /></a
 						>
