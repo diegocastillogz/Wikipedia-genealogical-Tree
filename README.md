@@ -2,11 +2,15 @@
 
 ## Following steps
 
-- Getting character info when the user clicks it (leaf nodes)
-- working in styles
-- todos on character-box component
+- add light theme
 - left menu with the characters and search bar to improve UX
 - saving most searched characters on db
+-
+<!--
+	TODO -- Add modal or something to see sons or brothers
+	TODO -- When the user clicks on a character leaf it should request its father if they exist and add them to the store
+-->
+- add an index page with the most searched
 
 ## What I'm using on this project
 
