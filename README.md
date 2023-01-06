@@ -5,7 +5,7 @@
 - add light theme
 - left menu with the characters and search bar to improve UX
 - saving most searched characters on db
--
+- at least responsive top menu
 <!--
 	TODO -- Add modal or something to see sons or brothers
 	TODO -- When the user clicks on a character leaf it should request its father if they exist and add them to the store
