@@ -8,7 +8,11 @@
 		boxColor: '#191d30',
 		primaryFont: '#fff',
 		gray: '#585858',
-		white: '#fff'
+		white: '#fff',
+		purple: '#5965f9',
+		blue: '#007bff',
+		aquablue: '#17a2b8',
+		red: '#ff5959'
 	};
 </script>
 

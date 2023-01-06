@@ -90,12 +90,17 @@ const getCharacterData = (elementId: string): Character => {
 	return { image, bornDate, diedDate, causeofDeath, burial, parentsNames } as Character;
 };
 
-export const formatBody = ({ text, title, pageid }: PageContent): Character | undefined => {
+export const formatBody = ({
+	text,
+	title,
+	pageid,
+	pageName
+}: PageContent): Character | undefined => {
 	const pageHtmlContent = text || '';
 
 	if (!pageHtmlContent || typeof window === 'undefined') return;
 	createElementFromHTML(pageHtmlContent, pageid?.toString());
-	return { ...getCharacterData(pageid?.toString()), name: title, pageid };
+	return { ...getCharacterData(pageid?.toString() || ''), name: title, pageid, pageName };
 };
 
 export const getRedirection = ({ text, pageid }: PageContent) => {
@@ -110,7 +115,7 @@ export const getRedirection = ({ text, pageid }: PageContent) => {
 
 	const createdRedirectionElement = createElementFromHTML(
 		pageHtmlContent,
-		`${pageid.toString()}-redirect-remove`
+		`${pageid?.toString() || ''}-redirect-remove`
 	);
 	const redirectionLink = createdRedirectionElement
 		?.querySelector('.redirectText li a')

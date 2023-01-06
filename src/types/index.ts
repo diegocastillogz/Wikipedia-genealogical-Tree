@@ -1,7 +1,8 @@
 export type PageContent = {
-	title: string;
-	pageid: number;
-	text: string;
+	title?: string;
+	pageid?: number;
+	text?: string;
+	pageName?: string;
 };
 
 export type Character = {
@@ -14,6 +15,7 @@ export type Character = {
 	causeofDeath?: string;
 	parentsNames?: string[];
 	parents: Character[];
+	pageName?: string;
 };
 
 export type AutocompleteSearchResult = {
