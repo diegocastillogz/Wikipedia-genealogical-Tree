@@ -53,12 +53,10 @@
 		border-radius: 12px;
 		height: 350px;
 		width: 250px;
-		margin: 0 20px;
 		position: absolute;
 		left: -300px;
-		top: 400px;
+		top: 380px;
 		opacity: 0;
-		padding: 5px;
 	}
 
 	.index-character-box:nth-child(2) {
