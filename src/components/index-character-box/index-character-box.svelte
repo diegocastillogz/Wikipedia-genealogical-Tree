@@ -51,8 +51,8 @@
 		background-color: var(--boxColor);
 		border: 1px solid rgba(255, 255, 255, 0.1) !important;
 		border-radius: 12px;
-		height: 350px;
-		width: 250px;
+		height: 320px;
+		width: 220px;
 		position: absolute;
 		left: -300px;
 		top: 380px;
