@@ -8,7 +8,7 @@
 		position: absolute;
 		background-color: var(--gray);
 		color: white;
-		top: -100px;
+		top: 0px;
 		left: 0px;
 		z-index: 1000;
 		width: 100%;

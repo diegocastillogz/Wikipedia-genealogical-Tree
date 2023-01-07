@@ -38,7 +38,6 @@
 	:global(main > div) {
 		padding-bottom: 5rem;
 		height: 100%;
-		margin-top: 100px;
 	}
 
 	:global(body, h1, h2, h3, p, ul, li, input) {
