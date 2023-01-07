@@ -3,15 +3,26 @@
 </script>
 
 <header>
-	<h1>Wikipedia genealogical tree</h1>
+	<a href="/">
+		<h1>Wikipedia genealogical tree</h1>
+	</a>
 	<InputSearch />
 </header>
 
 <style>
+	a {
+		display: flex;
+		align-items: center;
+		text-align: left;
+		cursor: pointer;
+		width: 700px;
+	}
+
 	h1 {
 		margin-bottom: 10px;
 		width: 50vw;
 		color: var(--primaryFont);
+		margin: auto 0;
 	}
 
 	header {
@@ -22,5 +33,6 @@
 		padding: 10px 15px 5px;
 		background-color: var(--secondary);
 		z-index: 100;
+		min-height: 60px;
 	}
 </style>

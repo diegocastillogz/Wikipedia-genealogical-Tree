@@ -52,9 +52,13 @@
 	:global(.tf-ancestor-tree li ul) {
 		margin-bottom: 1em;
 	}
-	:global(.tf-tree .tf-nc:after, .tf-tree.tf-gap-lg li li:before, .tf-tree
-			li
-			li:last-child:before, .tf-tree.tf-gap-lg li > .tf-nc:before, .tf-tree li li:before) {
+	:global(
+			.tf-tree .tf-nc:after,
+			.tf-tree.tf-gap-lg li li:before,
+			.tf-tree li li:last-child:before,
+			.tf-tree.tf-gap-lg li > .tf-nc:before,
+			.tf-tree li li:before
+		) {
 		background-color: var(--white) !important;
 		border-color: var(--white) !important;
 	}

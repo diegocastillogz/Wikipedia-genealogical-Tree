@@ -1,11 +1,16 @@
 <script lang="ts">
 	import Header from '../components/header/header.svelte';
 	import ThemeProvider from '../components/theme-provider/theme-provider.svelte';
+	import { page } from '$app/stores';
+	let url: URL;
+	$: url = $page.url;
 </script>
 
 <ThemeProvider>
 	<div class="layout">
-		<Header />
+		{#if url.pathname !== '/'}
+			<Header />
+		{/if}
 		<main>
 			<slot />
 		</main>
@@ -17,11 +22,20 @@
 		display: flex;
 		flex-direction: column;
 		background-color: var(--primary);
-		min-height: 100vh;
+		height: 100vh;
+	}
+
+	:global(html, body) {
+		height: 100vh;
+	}
+
+	:global(main) {
+		min-height: calc(100vh - 76px);
 	}
 
 	:global(main > div) {
 		padding-bottom: 5rem;
+		height: 100%;
 	}
 
 	:global(body, h1, h2, h3, p, ul, li, input) {

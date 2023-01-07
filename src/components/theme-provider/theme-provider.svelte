@@ -12,7 +12,10 @@
 		purple: '#5965f9',
 		blue: '#007bff',
 		aquablue: '#17a2b8',
-		red: '#ff5959'
+		red: '#ff5959',
+		pink: '#c999af',
+		yellow: '#f4fab4',
+		green: '#95fab9'
 	};
 </script>
 

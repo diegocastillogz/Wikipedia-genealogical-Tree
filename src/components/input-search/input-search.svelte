@@ -55,6 +55,9 @@
 <style>
 	.input-container {
 		position: relative;
+		margin: auto;
+		display: flex;
+		justify-content: center;
 	}
 	.input-container input {
 		line-height: 1.5;
