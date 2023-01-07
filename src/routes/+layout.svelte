@@ -23,6 +23,7 @@
 		flex-direction: column;
 		background-color: var(--primary);
 		height: 100vh;
+		overflow: hidden;
 	}
 
 	:global(html, body) {
@@ -31,11 +32,13 @@
 
 	:global(main) {
 		min-height: calc(100vh - 76px);
+		overflow: hidden;
 	}
 
 	:global(main > div) {
 		padding-bottom: 5rem;
 		height: 100%;
+		margin-top: 100px;
 	}
 
 	:global(body, h1, h2, h3, p, ul, li, input) {

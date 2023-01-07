@@ -15,7 +15,8 @@
 		align-items: center;
 		text-align: left;
 		cursor: pointer;
-		width: 700px;
+		width: 600px;
+		text-decoration: none;
 	}
 
 	h1 {

@@ -52,8 +52,4 @@
 		height: 100%;
 		padding: 0px 40px;
 	}
-
-	:global(main) {
-		overflow: hidden;
-	}
 </style>

@@ -61,7 +61,7 @@
 	}
 	.input-container input {
 		line-height: 1.5;
-		width: 40%;
+		width: 800px;
 		font-size: 16px;
 		padding: 6px 12px;
 		width: 50vw;
@@ -72,8 +72,9 @@
 	.autocomplete-list {
 		position: absolute;
 		z-index: 100;
-		width: 100%;
+		width: 750px;
 		opacity: 0.9;
+		top: 40px;
 	}
 
 	.autocomplete-list li {
